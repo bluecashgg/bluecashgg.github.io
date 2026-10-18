@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>BLUE CASH</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="description" content="BLUE CASH — organização de Free Fire. Aqui, os gênios são criados."><meta property="og:type" content="website"><meta property="og:title" content="BLUE CASH"><meta property="og:description" content="Aqui, os gênios são criados. Confrontos, ranking, fichas e clips da organização."><meta property="og:image" content="https://bluecashgg.github.io/logo.png"><meta property="og:url" content="https://bluecashgg.github.io/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#05060F"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="BLUE CASH — organização de Free Fire. Aqui, os gênios são criados."><meta property="og:type" content="website"><meta property="og:title" content="BLUE CASH"><meta property="og:description" content="Aqui, os gênios são criados. Confrontos, ranking, fichas e clips da organização."><meta property="og:image" content="https://bluecashgg.com.br/logo.png"><meta property="og:url" content="https://bluecashgg.com.br/"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#05060F"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="BLUE CASH">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -538,7 +538,7 @@ if(o.score){x.save();x.shadowColor='#4FD1FF';x.shadowBlur=16;x.fillStyle='#4FD1F
 else if(o.when){x.fillStyle='#fff';x.font=F(84);x.fillText(o.when,W/2,1230);x.fillStyle='#8FA0D8';x.font=F(40);x.fillText(o.sub||'Horário de Brasília',W/2,1295)}
 const chips=(o.chips||[]).filter(Boolean);let y=1420;x.font=F(40);
 chips.forEach((s,i)=>{const t=String(s).toUpperCase(),w=x.measureText(t).width+60,cx=W/2;x.strokeStyle='#4FD1FF';x.lineWidth=3;x.fillStyle='#0022F822';x.beginPath();x.roundRect(cx-w/2,y-48,w,72,16);x.fill();x.stroke();x.fillStyle='#fff';x.fillText(t,cx,y);y+=100});
-x.fillStyle='#4FD1FF';x.font=F(54);x.fillText('bluecashgg.github.io',W/2,1730);x.fillStyle='#8FA0D8';x.font=F(36);x.fillText('Aqui, os gênios são criados.  •  Desafie a BLUE CASH',W/2,1790);
+x.fillStyle='#4FD1FF';x.font=F(54);x.fillText('bluecashgg.com.br',W/2,1730);x.fillStyle='#8FA0D8';x.font=F(36);x.fillText('Aqui, os gênios são criados.  •  Desafie a BLUE CASH',W/2,1790);
 return c}
 async function shareCard(o){modal('<div class="so" style="text-align:center;padding:30px">Montando o cartão…</div>');const c=await drawVs(o),fn=`BLUECASH_${o.a.n}_vs_${o.b.n}`.replace(/[^A-Za-z0-9]+/g,'_')+'.png';
 modal(`<div id="svc"></div><div class="row" style="flex-wrap:wrap"><button class="btn pri" id="svs">📤 COMPARTILHAR</button><button class="btn" id="svd">BAIXAR IMAGEM</button><button class="btn" onclick="closeM()">FECHAR</button></div><p class="so" style="font-size:14px;margin:6px 0 0">Formato de stories (9:16). Poste e marque a BLUE CASH!</p>`);
@@ -546,7 +546,7 @@ c.style.cssText='width:100%;max-width:300px;display:block;margin:0 auto 12px;bor
 let blob=null;try{blob=await new Promise(r=>c.toBlob(r,'image/png'))}catch{}
 if(!blob){$('#svc').innerHTML='<div class="so">Não foi possível gerar a imagem agora.</div>';return}
 const file=new File([blob],fn,{type:'image/png'}),dl=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;a.click()};
-$('#svd').onclick=dl;$('#svs').onclick=async()=>{try{if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:'BLUE CASH',text:`${o.a.n} x ${o.b.n} • bluecashgg.github.io`});else{dl();toast('Imagem baixada! Poste nos seus stories.')}}catch{}}}
+$('#svd').onclick=dl;$('#svs').onclick=async()=>{try{if(navigator.canShare&&navigator.canShare({files:[file]}))await navigator.share({files:[file],title:'BLUE CASH',text:`${o.a.n} x ${o.b.n} • bluecashgg.com.br`});else{dl();toast('Imagem baixada! Poste nos seus stories.')}}catch{}}}
 function shareMatch(id){const m=MM[id];if(!m)return;const fin=m.status==='FINALIZADO',d=m.scheduled_at?new Date(m.scheduled_at):null;
 shareCard({a:{n:'BLUE CASH',l:'logo.png',fem:!!m.fem_us},b:{n:m.opponent,l:m.logo_url||'',fem:!!m.fem_them},top:fin?'RESULTADO':ST[m.status]===1?'CONFRONTO MARCADO':'NA MIRA',
 score:fin?(m.wo?(m.wo==='win'?'WO • VITÓRIA':'WO'):`${m.score_us} × ${m.score_them}`):'',when:d?fmt(d.getTime()).replace(' ',' • '):(fin?'':'DATA A DEFINIR'),
