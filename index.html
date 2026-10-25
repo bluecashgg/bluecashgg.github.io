@@ -590,7 +590,7 @@ function tnCard(t){const B=tnModel(t),end=t.status==='encerrado',st=staff();
 return`<details class="card tn"${end?'':' open'}><summary><div class="tnh"><div><div class="lbl">TORNEIO${end?' • ENCERRADO':''}</div><b class="tnn">${esc(t.name)}</b><div class="tnt"><span class="tag" style="color:#4FD1FF">${t.size} TIMES</span><span class="tag" style="color:#4FD1FF">${esc(t.format||'MD1')}</span><span class="tag" style="color:${B.champ?'#F5B301':'#22C55E'}">${B.phase}</span>${t.prize?`<span class="tag" style="color:#FFB800">★ PREMIAÇÃO ${esc(t.prize)}</span>`:''}</div></div>${B.champ?`<div class="tnc">♛ ${esc(B.champ.n)}</div>`:''}<i class="tnx">▾</i></div></summary><div class="tnb">${bracketHtml(t,B)}${st?`<div class="row" style="flex-wrap:wrap"><button class="btn" data-xed="${t.id}">✎ EDITAR TIMES</button><button class="btn ${end?'':'pri'}" data-xend="${t.id}">${end?'REABRIR TORNEIO':'ENCERRAR TORNEIO'}</button><button class="btn bad" data-xdel="${t.id}">EXCLUIR</button></div><div class="so" style="font-size:14px;margin-top:6px">Toque em um jogo para lançar o placar. O vencedor avança sozinho.</div>`:`<div class="so" style="font-size:14px;margin-top:4px">Toque em um jogo para ver os times, jogadores e gerar o cartão VS.</div>`}</div></details>`}
 
 /* ---- cartão VS compartilhável (imagem 9:16 para stories) ---- */
-/* cartão de compartilhar: azul BLUE CASH, duas molduras iguais, em pé (9:16) e deitado (16:9) */
+/* cartão de compartilhar: azul BLUE CASH, logos soltas com brilho, em pé (9:16) e deitado (16:9) */
 async function drawVs(o,mode){const hz=mode==='h',W=hz?1600:1080,H=hz?900:1920,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
 const ld=s=>new Promise(r=>{if(!s)return r(null);const i=new Image();i.crossOrigin='anonymous';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=s});
 try{await document.fonts.load('800 60px Rajdhani')}catch{}
@@ -601,10 +601,13 @@ let g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#04061A');g.addColorStop
 const wash=(cx,cy,r,col)=>{const q=x.createRadialGradient(cx,cy,0,cx,cy,r);q.addColorStop(0,col);q.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=q;x.fillRect(0,0,W,H)};
 wash(W/2,H*(hz?.5:.4),Math.max(W,H)*.6,'rgba(30,80,255,.42)');wash(Lx,Ly,hz?520:470,COLA+'55');wash(Rx,Ly,hz?520:470,COLB+'40');
 x.fillStyle='#4FD1FF';x.fillRect(hz?50:60,hz?44:60,hz?200:220,6);x.fillRect(W-(hz?250:280),H-(hz?50:66),hz?200:220,6);
-/* moldura igual para os dois lados */
-const frame=(img,n,cx,cy,col)=>{const s=Sz,r=hz?40:36,L=cx-s/2,T=cy-s/2;x.save();x.shadowColor=col;x.shadowBlur=46;x.fillStyle='rgba(6,12,55,.78)';x.beginPath();x.roundRect(L,T,s,s,r);x.fill();x.restore();
-x.save();x.beginPath();x.roundRect(L,T,s,s,r);x.clip();if(img){const pad=img.width*0+s*.09,bx=s-pad*2,k=Math.min(bx/img.width,bx/img.height),w=img.width*k,h=img.height*k;x.drawImage(img,cx-w/2,cy-h/2,w,h)}else{x.fillStyle='#FFB800';x.font=F(s*.34,800);x.textAlign='center';x.textBaseline='middle';x.fillText(String(n).replace(/[^A-Za-z0-9]/g,'').slice(0,2).toUpperCase()||'?',cx,cy+6);x.textBaseline='alphabetic'}x.restore();
-x.save();x.strokeStyle=col;x.lineWidth=5;x.shadowColor=col;x.shadowBlur=24;x.beginPath();x.roundRect(L,T,s,s,r);x.stroke();x.restore()};
+/* logos soltas (sem quadrado), com brilho na cor de cada lado */
+const opaque=img=>{try{const t=document.createElement('canvas');t.width=t.height=8;const q=t.getContext('2d');q.drawImage(img,0,0,8,8);return q.getImageData(0,0,1,1).data[3]>200}catch{return false}};
+const frame=(img,n,cx,cy,col)=>{const s=Sz*.94;
+if(img){const k=Math.min(s/img.width,s/img.height),w=img.width*k,h=img.height*k,L=cx-w/2,T=cy-h/2;
+ if(opaque(img)){const r=Math.min(w,h)*.1;x.save();x.shadowColor=col;x.shadowBlur=46;x.fillStyle='#000';x.beginPath();x.roundRect(L,T,w,h,r);x.fill();x.restore();x.save();x.beginPath();x.roundRect(L,T,w,h,r);x.clip();x.drawImage(img,L,T,w,h);x.restore()}
+ else{x.save();x.shadowColor=col;x.shadowBlur=40;x.drawImage(img,L,T,w,h);x.shadowBlur=16;x.drawImage(img,L,T,w,h);x.restore()}}
+else{x.save();x.shadowColor=col;x.shadowBlur=40;x.fillStyle='#0B1550';x.strokeStyle=col;x.lineWidth=5;x.beginPath();for(let i=0;i<5;i++){const a=-Math.PI/2+i*2*Math.PI/5;x.lineTo(cx+Math.cos(a)*s/2,cy+Math.sin(a)*s/2)}x.closePath();x.fill();x.stroke();x.shadowBlur=0;x.fillStyle='#FFB800';x.font=F(s*.34,800);x.textAlign='center';x.textBaseline='middle';x.fillText(String(n).replace(/[^A-Za-z0-9]/g,'').slice(0,2).toUpperCase()||'?',cx,cy+6);x.textBaseline='alphabetic';x.restore()}};
 frame(la,o.a.n,Lx,Ly,COLA);frame(lb,o.b.n,Rx,Ly,COLB);
 /* nomes */
 x.textAlign='center';const fit=(t,max,sz,w=800)=>{t=String(t).toUpperCase();let q=sz;x.font=F(q,w);while(x.measureText(t).width>max&&q>26){q-=2;x.font=F(q,w)}return[t,q]};
