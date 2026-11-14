@@ -137,6 +137,73 @@ details.lnr{padding:0;margin-bottom:10px}details.lnr>summary{display:flex;align-
 .lnme{border-color:var(--cy);box-shadow:0 0 30px #3DD0FF18}.lnlog>div{display:flex;gap:12px;align-items:center;padding:9px 4px;border-top:1px solid #243CA855}.lnlog>div>span{min-width:46px;text-align:right;font-weight:800;font-size:17px}.lnlog>div>div{flex:1;min-width:0}.lnlog small{display:block;color:var(--so);font-size:12px}.lnlog time{color:var(--so);font-size:11px;white-space:nowrap}
 .lnpr{display:flex;align-items:center;gap:12px;padding:9px 6px;border-bottom:1px solid #243CA833}.lnpr:last-child{border-bottom:0}.lnpr.me{background:#3DD0FF14;border-radius:12px}
 @media(max-width:700px){.lnpod{grid-template-columns:1fr;}.lnpod .p1{order:-1}.lnst.big{grid-template-columns:1fr 1fr}.lnlog time{display:none}}
+/* ===== RANKING: pontos nos cards ===== */
+.rkpts{margin-top:8px;font-size:22px;font-weight:800;color:var(--cy);line-height:1}.rkpts small{font-size:11px;color:var(--so);font-weight:600;margin-left:4px}
+details.lnx{margin-top:12px}details.lnx>summary{cursor:pointer;font:12px Consolas,monospace;letter-spacing:1px;color:var(--cy);padding:6px 0}
+/* ===== LINES: pódio caprichado ===== */
+.lntabs{display:flex;gap:8px;margin:6px 0 16px}.lntabs button{font-family:inherit;font-size:15px}
+.lnpod{display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:16px;align-items:end;margin:18px 0 12px}
+.lnp{--mc:#B8C4E6;position:relative;overflow:hidden;text-align:center;border-radius:22px;padding:26px 14px 20px;border:1px solid color-mix(in srgb,var(--mc) 55%,transparent);background:radial-gradient(120% 80% at 50% 0%,color-mix(in srgb,var(--mc) 22%,transparent),transparent 65%),linear-gradient(180deg,var(--p2),var(--p));box-shadow:0 14px 40px #0006,0 0 0 1px #ffffff08 inset;transition:.25s}
+.lnp:hover{transform:translateY(-4px)}
+.lnp.p1{--mc:#FFC21A;padding:40px 16px 26px;min-height:430px;border-width:2px;box-shadow:0 18px 60px #FFC21A2E,0 0 42px #FFC21A22;animation:lnglow 3.2s ease-in-out infinite}
+.lnp.p2{--mc:#C9D3EE;min-height:372px}.lnp.p3{--mc:#D98A4A;min-height:352px}
+.lnp:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,#ffffff1c,transparent);transform:skewX(-18deg);animation:lnshine 5.5s ease-in-out infinite}
+.lnp.p2:after{animation-delay:1.2s}.lnp.p3:after{animation-delay:2.4s}
+@keyframes lnshine{0%,55%{left:-60%}100%{left:140%}}@keyframes lnglow{50%{box-shadow:0 18px 70px #FFC21A4D,0 0 60px #FFC21A33}}
+.lncrown{color:var(--mc);filter:drop-shadow(0 0 10px #FFC21A88);margin:-14px 0 4px;animation:lnfloat 2.8s ease-in-out infinite}@keyframes lnfloat{50%{transform:translateY(-4px)}}
+.lnbadge{position:absolute;top:12px;left:14px;font-weight:900;font-size:15px;padding:3px 11px;border-radius:999px;color:#10131f;background:var(--mc)}
+.lnn{display:block;font-size:24px;margin-top:6px;word-break:break-word;letter-spacing:.3px}.p1 .lnn{font-size:32px;color:#FFE08A;text-shadow:0 0 18px #FFC21A55}
+.lncat{font:11px Consolas,monospace;letter-spacing:2px;color:var(--so);margin:2px 0 8px}
+.lnpt{font-size:50px;font-weight:900;color:var(--mc);line-height:1;margin:6px 0 12px;text-shadow:0 0 22px color-mix(in srgb,var(--mc) 45%,transparent)}.p1 .lnpt{font-size:68px}.lnpt small{font-size:14px;margin-left:6px;color:var(--so);font-weight:700}
+.lnring{--v:0;width:78px;height:78px;border-radius:50%;margin:0 auto;display:grid;place-items:center;position:relative;background:conic-gradient(var(--mc) calc(var(--v)*1%),#ffffff1a 0)}
+.lnring:before{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--p)}.lnring b{position:relative;z-index:1;font-size:18px}.p1 .lnring{width:92px;height:92px}
+.lnrl{font:10px Consolas,monospace;letter-spacing:2px;color:var(--so);margin:6px 0 10px}
+.lnchips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}.lnchips span{font-size:12px;padding:4px 10px;border-radius:999px;background:#ffffff0f;border:1px solid #ffffff14;color:var(--tx)}.lnchips .hot{background:#22C55E26;border-color:#22C55E66;color:var(--ok)}
+.lnmb{display:flex;justify-content:center;margin-top:14px}.lnmb .lav{margin-left:-8px;border:2px solid var(--p)}.lnmb .lav:first-child{margin-left:0}
+details.lnr.top1{border-color:#FFC21A88;background:linear-gradient(90deg,#FFC21A14,transparent 40%),#0A0F24E6}details.lnr.top2{border-color:#C9D3EE77}details.lnr.top3{border-color:#D98A4A77}
+details.lnr.top1 .lnpos{color:#FFC21A}details.lnr.top2 .lnpos{color:#C9D3EE}details.lnr.top3 .lnpos{color:#D98A4A}
+@media(max-width:760px){.lnpod{grid-template-columns:1fr}.lnpod .lnp.p1{order:-1;min-height:0}.lnpod .lnp{min-height:0!important}}
+/* ===== TEMAS SAZONAIS (só ativos com html[data-season]; o padrão azul nunca muda) ===== */
+html[data-season=sexta13]{--bg:#050204;--p:#12060A;--p2:#200A10;--pri:#C4122B;--pri2:#FF2A3D;--cy:#FF4B5C;--gold:#D9A441;--tx:#F6EDED;--so:#C79BA0;--ln:#5E1420;--g1:#C4122B33;--g2:#FF2A3D14;--navbg:#0A0306CC;--cardbg:#12070BE6;--btnbg:#FF4B5C10;--hov:#FF4B5C66}
+html[data-season=natal]{--bg:#04140C;--p:#0B2417;--p2:#123423;--pri:#C8102E;--pri2:#E8344A;--cy:#7BE8A4;--gold:#F8B229;--tx:#F7FFF9;--so:#9FD1B2;--ln:#1E6B43;--g1:#C8102E33;--g2:#F8B22914;--navbg:#06170ECC;--cardbg:#0A1E14E6;--btnbg:#7BE8A410;--hov:#F8B22966}
+html[data-season=anonovo]{--bg:#050409;--p:#100D1B;--p2:#1B1630;--pri:#C9930A;--pri2:#FFD76A;--cy:#FFD76A;--gold:#FFF1B8;--tx:#FFF9E8;--so:#CDBF9A;--ln:#6B5314;--g1:#FFD76A26;--g2:#9C7BFF14;--navbg:#0A0812CC;--cardbg:#0E0B18E6;--btnbg:#FFD76A10;--hov:#FFD76A66}
+html[data-season] body{background:radial-gradient(900px 500px at 90% -10%,var(--g1),transparent 60%),radial-gradient(700px 400px at -10% 110%,var(--g2),transparent 60%),var(--bg)}
+html[data-season] nav{background:var(--navbg)}
+html[data-season] .card{background:var(--cardbg)}html[data-season] .card:hover{border-color:var(--hov);box-shadow:0 10px 30px var(--g1)}
+html[data-season] .btn{background:var(--btnbg)}html[data-season] .btn:hover{background:var(--g1)}
+html[data-season] .btn.pri,html[data-season] .lntabs button.on{background:linear-gradient(135deg,var(--pri),var(--pri2));box-shadow:0 6px 20px var(--g1);color:#fff;border-color:transparent}
+html[data-season=anonovo] .btn.pri,html[data-season=anonovo] .lntabs button.on{color:#1A1200}
+html[data-season] nav a.on{background:linear-gradient(90deg,var(--g1),var(--g2))}html[data-season] nav a:hover{background:var(--g2)}
+html[data-season] .hero{background:linear-gradient(120deg,var(--p2),var(--cardbg) 55%,var(--p))}
+html[data-season] .hero:before{background:conic-gradient(from 0deg,transparent,var(--g1),transparent 30%)}
+html[data-season] .lnbar i,html[data-season] .lnhist i{background:linear-gradient(90deg,var(--pri),var(--pri2))}
+html[data-season] .lnpr.me{background:var(--g2)}
+.szn{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.szn b,.szn i{position:absolute;display:block}
+.sznp{position:absolute;top:8px;left:50%;transform:translateX(-50%);font:700 11px Consolas,monospace;letter-spacing:3px;padding:4px 14px;border-radius:999px;background:#000A;border:1px solid var(--cy);color:var(--cy)}
+#sznx{position:fixed;left:12px;bottom:12px;z-index:70;font:700 12px Consolas,monospace;letter-spacing:1px;padding:8px 14px;border-radius:10px;background:#000C;border:1px solid var(--cy);color:var(--cy);cursor:pointer}
+/* natal: neve + luzinhas */
+.sn{inset:0;background-repeat:repeat;animation:snow linear infinite}
+.sn.s1{background-image:radial-gradient(3px 3px at 20px 30px,#fff,transparent),radial-gradient(2px 2px at 90px 120px,#fff,transparent),radial-gradient(3px 3px at 160px 70px,#fffc,transparent);background-size:200px 200px;--dx:30px;--dy:600px;animation-duration:12s;opacity:.85}
+.sn.s2{background-image:radial-gradient(2px 2px at 40px 60px,#fff,transparent),radial-gradient(3px 3px at 200px 200px,#fff,transparent),radial-gradient(2px 2px at 120px 20px,#fffb,transparent);background-size:300px 300px;--dx:-40px;--dy:900px;animation-duration:20s;opacity:.6}
+.sn.s3{background-image:radial-gradient(2px 2px at 70px 90px,#fff9,transparent),radial-gradient(2px 2px at 300px 260px,#fff9,transparent);background-size:420px 420px;--dx:50px;--dy:840px;animation-duration:30s;opacity:.45}
+@keyframes snow{to{background-position:var(--dx) var(--dy)}}
+.lights{left:0;right:0;top:0;height:14px;background:radial-gradient(circle 5px at 12px 7px,#E8344A 0 4px,transparent 5px) 0 0/48px 14px repeat-x,radial-gradient(circle 5px at 36px 7px,#F8B229 0 4px,transparent 5px) 0 0/48px 14px repeat-x,radial-gradient(circle 5px at 24px 7px,#7BE8A4 0 4px,transparent 5px) 0 0/48px 14px repeat-x;filter:drop-shadow(0 0 6px #F8B22988);animation:twk 1.6s ease-in-out infinite alternate;opacity:.9}
+@keyframes twk{from{opacity:.55}to{opacity:1}}
+/* ano novo: fogos + confete */
+.fw{width:150px;height:150px;margin:-75px;border-radius:50%;opacity:0;background:repeating-conic-gradient(from 0deg,var(--c) 0 2.5deg,transparent 2.5deg 15deg);-webkit-mask:radial-gradient(circle,transparent 0 28%,#000 30% 62%,transparent 64%);mask:radial-gradient(circle,transparent 0 28%,#000 30% 62%,transparent 64%);animation:fw 5.5s ease-out infinite}
+@keyframes fw{0%{transform:scale(.1);opacity:0}8%{opacity:1}60%{transform:scale(1.25);opacity:.85}100%{transform:scale(1.6);opacity:0}}
+.cf{inset:0;background-repeat:repeat;animation:snow linear infinite}
+.cf.c1{background-image:radial-gradient(3px 3px at 30px 40px,#FFD76A,transparent),radial-gradient(2px 2px at 130px 150px,#fff,transparent),radial-gradient(3px 3px at 220px 90px,#FF9F43,transparent),radial-gradient(2px 2px at 90px 230px,#7DF9FF,transparent);background-size:260px 260px;--dx:20px;--dy:780px;animation-duration:16s;opacity:.85}
+.cf.c2{background-image:radial-gradient(2px 2px at 60px 70px,#FF6B9A,transparent),radial-gradient(3px 3px at 190px 190px,#FFD76A,transparent);background-size:340px 340px;--dx:-30px;--dy:1020px;animation-duration:26s;opacity:.6}
+/* sexta 13: névoa, vinheta que pisca e riscos */
+.fog{inset:0;background:radial-gradient(60% 40% at 20% 100%,#9A9A9A24,transparent 70%),radial-gradient(50% 35% at 85% 100%,#8A8A8A20,transparent 70%);animation:fogm 18s ease-in-out infinite alternate}
+@keyframes fogm{from{transform:translateX(-3%)}to{transform:translateX(3%)}}
+.vig{inset:0;background:radial-gradient(120% 100% at 50% 40%,transparent 55%,#4A000099 100%);animation:flick 7s infinite}
+@keyframes flick{0%,17%,22%,58%,64%,100%{opacity:1}19%{opacity:.35}60%{opacity:.5}62%{opacity:.8}}
+.scr{inset:0;background:repeating-linear-gradient(115deg,transparent 0 150px,#FF1A3012 150px 151px,transparent 151px 390px)}
+.scr:after{content:"13";position:absolute;right:2%;bottom:-4%;font:900 clamp(160px,28vw,360px)/1 Rajdhani,sans-serif;color:#FF1A3010}
+@media(prefers-reduced-motion:reduce){.szn *{animation:none!important}}
 </style></head><body>
 <div id="app"><nav id="nav"></nav><div id="mw"><div id="tb"></div><main id="v"></main></div></div>
 <div id="mod"><div id="modc"></div></div><div id="menu"></div><div id="toast"></div><div id="upd"><span>Nova versão disponível</span><button class="btn pri" id="updb">Atualizar</button></div>
@@ -877,39 +944,65 @@ window.nkOut=()=>{const v=(document.getElementById('nkin')?.value||'').replace(/
 window.nkUpd=()=>{const o=window.nkOut(),pv=document.getElementById('nkpv'),ct=document.getElementById('nkct');if(pv)pv.textContent=o.split(window.NK_SP).join('·');if(ct)ct.textContent=o.length+' caractere(s) contando os espaços invisíveis'};
 window.nkCp=async(only)=>{const t=only?window.NK_SP:window.nkOut();if(!t){toast('Escreva o nick primeiro.');return}try{await navigator.clipboard.writeText(t);toast(only?'Espaço invisível copiado.':'Nick copiado! Cole no jogo.')}catch{toast('Não consegui copiar. Selecione e copie manualmente.')}};
 
-/* ======== RANKING DE LINES e PONTOS (dados enviados pelo app: tabelas lines_public e player_points) ======== */
-let LNP='week',PTP='week';
+/* ======== RANKING (com pontos) + LINES + TEMAS SAZONAIS  (dados do app via Supabase: ranking_entries, player_points, lines_public, app_settings) ======== */
+let LNP='total',PTP='week';
 const sv_=d=>`<svg class="ni" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
-NAV.splice(3,0,['lines',sv_('<path d="M5 20V10M12 20V4M19 20v-7"/>'),'Lines'],['pontos',sv_('<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/>'),'Pontos']);
+NAV.splice(3,0,['lines',sv_('<path d="M5 20V10M12 20V4M19 20v-7"/>'),'Lines']);   // Ranking e Pontos viraram uma aba só: "Ranking"
 const lnDt=t=>{const d=new Date(t);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})};
 const lnAv=(bc,nick,sz=34)=>{const p=(typeof RPL!=='undefined'?RPL:[]).find(x=>x.bc_number==bc);return`<span class="lav" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz/2.6)}px">${p&&p.photo_url?`<img src="${esc(p.photo_url)}" alt="" loading="lazy">`:esc((nick||'—').slice(0,2).toUpperCase())}</span>`};
 const lnSg=n=>(n>0?'+':'')+n;
 const KIND={CASUAL:'Casual',INTERNO:'Interno',EXTERNO:'Externo'},LOGK={PARTIDA:'Partida',DIA:'Presença do dia',SEMANA:'Semana',MANUAL:'Ajuste',AUSENCIA:'Ausência'};
-const lnTabs=(k,v,a,b)=>`<div class="lntabs"><button data-${k}="week" class="${v==='week'?'on':''}">${a}</button><button data-${k}="total" class="${v==='total'?'on':''}">${b}</button></div>`;
+const lnTabs=(k,v,items)=>`<div class="lntabs">${items.map(([id,t])=>`<button data-${k}="${id}" class="${v===id?'on':''}">${t}</button>`).join('')}</div>`;
 document.addEventListener('click',e=>{const a=e.target.closest('[data-lnp]');if(a){LNP=a.dataset.lnp;show();return}const b=e.target.closest('[data-ptp]');if(b){PTP=b.dataset.ptp;show()}});
+const CROWN='<svg viewBox="0 0 64 44" width="46" height="32"><path d="M4 38 L10 10 L24 24 L32 4 L40 24 L54 10 L60 38 Z" fill="currentColor"/><rect x="6" y="40" width="52" height="4" rx="2" fill="currentColor"/></svg>';
 
+/* ---- LINES (refeito): Geral primeiro, depois Semana ---- */
 P.lines=async()=>{await loadRpl();const r=await api('/rest/v1/lines_public?select=*&order=rank.asc');if(!r.ok)throw new Error('Tabela lines_public indisponível. Rode o SQL 19_pontos_e_lines.sql no Supabase.');
 const wk=LNP==='week',pts=x=>wk?x.week_points:x.total_points,gm=x=>wk?x.week_games:x.games,wn=x=>wk?x.week_wins:x.wins,L=arr(r.d).slice().sort((a,b)=>pts(b)-pts(a)||b.total_points-a.total_points);
-const head=hero('RANKING DE LINES','Cada partida confirmada soma pontos para a line. Sobe quem joga mais e joga melhor.')+lnTabs('lnp',LNP,'SEMANA','GERAL');
+const head=hero('RANKING DE LINES','Cada partida confirmada soma pontos para a line. Sobe quem joga mais e joga melhor.')+lnTabs('lnp',LNP,[['total','GERAL'],['week','SEMANA']]);
 if(!L.length)return head+'<div class="so" style="padding:30px;text-align:center">Nenhuma line publicada ainda.</div>';
 const mx=Math.max(1,...L.map(pts)),wr=x=>gm(x)?Math.round(100*wn(x)/gm(x)):0,tot=L.reduce((a,x)=>a+pts(x),0),gt=L.reduce((a,x)=>a+gm(x),0);
 const stats=`<div class="lnst"><div><b>${L.length}</b><small>LINES</small></div><div><b>${gt}</b><small>PARTIDAS</small></div><div><b>${tot}</b><small>PONTOS ${wk?'NA SEMANA':'NO TOTAL'}</small></div></div>`;
-const pod=L.slice(0,3).map((x,i)=>`<div class="lnp p${i+1}"><div class="lnk">#${i+1}</div><b class="lnn">${esc(x.name)}</b><div class="lnpt">${pts(x)}<small>pts</small></div><div class="so">${gm(x)} partidas • ${wr(x)}% de vitórias</div><div class="lnmb">${arr(x.members).slice(0,4).map(m=>lnAv(m.bc,m.nick,30)).join('')}</div></div>`);
+const pod=L.slice(0,3).map((x,i)=>{const st=x.streak;return`<div class="lnp p${i+1}">${i===0?`<div class="lncrown">${CROWN}</div>`:''}<div class="lnbadge">${i+1}º</div><b class="lnn">${esc(x.name)}</b><div class="lncat">${esc(x.category||'')}</div><div class="lnpt">${pts(x)}<small>PTS</small></div><div class="lnring" style="--v:${wr(x)}"><b>${wr(x)}%</b></div><div class="lnrl">VITÓRIAS</div><div class="lnchips"><span>${gm(x)} partidas</span><span>${wn(x)} vit.</span>${st>=2?`<span class="hot">${st} seguidas</span>`:''}</div><div class="lnmb">${arr(x.members).slice(0,5).map(m=>lnAv(m.bc,m.nick,i===0?36:30)).join('')}</div></div>`});
 const pd=L.length>=3?`<div class="lnpod">${[pod[1],pod[0],pod[2]].join('')}</div>`:`<div class="lnpod one">${pod.join('')}</div>`;
 const row=(x,i)=>{const w=Math.max(2,Math.round(100*Math.max(0,pts(x))/mx)),h=arr(x.history),hm=Math.max(1,...h.map(z=>Math.abs(z.pts))),st=x.streak;
-return`<details class="card lnr"><summary><span class="lnpos">#${i+1}</span><span class="lnnm"><b>${esc(x.name)}</b><small>${esc(x.category||'')} • ${gm(x)} partidas • ${wr(x)}% vit.${st>=2?` • <i class="up">${st} vitórias seguidas</i>`:st<=-2?` • <i class="dn">${-st} derrotas seguidas</i>`:''}</small><span class="lnbar"><i style="width:${w}%"></i></span></span><span class="lnpts">${pts(x)}</span></summary>
+return`<details class="card lnr${i<3?' top'+(i+1):''}"><summary><span class="lnpos">#${i+1}</span><span class="lnnm"><b>${esc(x.name)}</b><small>${esc(x.category||'')} • ${gm(x)} partidas • ${wr(x)}% vit.${st>=2?` • <i class="up">${st} vitórias seguidas</i>`:st<=-2?` • <i class="dn">${-st} derrotas seguidas</i>`:''}</small><span class="lnbar"><i style="width:${w}%"></i></span></span><span class="lnpts">${pts(x)}</span></summary>
 <div class="lnbd"><div class="lbl">JOGADORES DA LINE</div><div class="lnmem">${arr(x.members).map(m=>`<div class="lnm">${lnAv(m.bc,m.nick,38)}<div><b>${esc(m.nick)}</b><small>BC-${String(m.bc).padStart(3,'0')} • ${m.pts} pts (${m.wk} na semana)</small></div></div>`).join('')||'<span class="so">Sem jogadores.</span>'}</div>
 <div class="lbl" style="margin-top:14px">PROGRESSO (ÚLTIMAS SEMANAS)</div>${h.length?`<div class="lnhist">${h.map(z=>`<div title="${esc(z.w)}: ${z.pts} pts, ${z.games} partidas"><i class="${z.pts<0?'neg':''}" style="height:${Math.max(4,Math.round(64*Math.abs(z.pts)/hm))}px"></i><b>${z.pts}</b><small>${esc(String(z.w).slice(-3))}</small></div>`).join('')}</div>`:'<div class="so">Ainda sem histórico.</div>'}
 <div class="lbl" style="margin-top:14px">ÚLTIMAS PARTIDAS</div><div class="lnrec">${arr(x.recent).map(z=>`<span class="${z.won?'w':'l'}" title="${lnDt(z.t)} • ${esc(KIND[z.kind]||z.kind)}${z.event?' • '+esc(z.event):''}">${z.won?'V':'D'} <small>${lnSg(z.pts)}</small></span>`).join('')||'<span class="so">Nenhuma partida.</span>'}</div>
 <div class="so" style="margin-top:10px">Geral: ${x.total_points} pts • ${x.games} partidas • ${x.wins} vitórias • mês: ${x.month_points} pts</div></div></details>`};
 return head+stats+pd+`<h2 style="margin:22px 0 10px">Classificação completa</h2>`+L.map(row).join('')+`<div class="so" style="margin-top:14px">Atualizado ${lnDt(Math.max(...L.map(x=>new Date(x.updated_at).getTime())))}</div>`};
 
-P.pontos=async()=>{await loadRpl();const r=await api('/rest/v1/player_points?select=*&order=week_rank.asc');if(!r.ok)throw new Error('Tabela player_points indisponível. Rode o SQL 19_pontos_e_lines.sql no Supabase.');
-const wk=PTP==='week',L=arr(r.d).slice().sort((a,b)=>(wk?b.week_points-a.week_points:b.points-a.points)||b.points-a.points||a.bc_number-b.bc_number),mine=me&&me.bc_number!=null?L.find(x=>x.bc_number===me.bc_number):null;
-let card='';
-if(mine){const lg=arr(mine.log);card=`<div class="card lnme"><div class="lbl">SUA PONTUAÇÃO • BC-${String(mine.bc_number).padStart(3,'0')}</div><div class="lnst big"><div><b>${mine.week_points}</b><small>NA SEMANA</small></div><div><b>${mine.month_points}</b><small>NO MÊS</small></div><div><b>${mine.points}</b><small>TOTAL</small></div><div><b>#${mine.week_rank}</b><small>RANKING DA SEMANA</small></div></div><div class="so">${mine.games} partidas no total • ${mine.week_games} nesta semana • posição geral #${mine.rank}</div><div class="lbl" style="margin-top:14px">COMO VOCÊ GANHOU / PERDEU PONTOS</div>${lg.length?`<div class="lnlog">${lg.map(z=>`<div><span class="${z.p>0?'up':z.p<0?'dn':''}">${z.p===0?'0':lnSg(z.p)}</span><div><b>${esc(LOGK[z.k]||z.k)}</b><small>${esc(z.d||'')}</small></div><time>${lnDt(z.t)}</time></div>`).join('')}</div>`:'<div class="so">Nenhum lançamento ainda.</div>'}</div>`}
-else if(me)card=`<div class="card"><div class="lbl">SUA PONTUAÇÃO</div><div class="so">Ainda não encontramos pontos ligados à sua conta. Os pontos aparecem quando sua ficha (BC) está vinculada ao seu Discord e você joga uma partida confirmada.</div></div>`;
-else card=`<div class="card"><div class="lbl">SUA PONTUAÇÃO</div><div class="so" style="margin-bottom:10px">Entre com o Discord para ver os seus pontos e o extrato.</div><button class="btn pri" onclick="login()">ENTRAR COM DISCORD</button></div>`;
-const rows=L.map((x,i)=>`<div class="lnpr${mine&&x.bc_number===mine.bc_number?' me':''}"><span class="lnpos">#${i+1}</span>${lnAv(x.bc_number,x.nick,34)}<span class="lnnm"><b>${esc(x.nick)}</b><small>BC-${String(x.bc_number).padStart(3,'0')} • ${x.games} partidas</small></span><span class="lnpts">${wk?x.week_points:x.points}</span></div>`).join('');
-return hero('PONTOS DOS JOGADORES','Veja quanto você tem e como cada ponto foi ganho.')+card+lnTabs('ptp',PTP,'SEMANA (RANKING AZUL)','GERAL')+`<div class="card" style="padding:6px 10px">${rows||'<div class="so" style="padding:20px">Sem pontos publicados ainda.</div>'}</div>`};
+/* ---- RANKING (junta Ranking Azul + Pontos numa aba só) ---- */
+const rkKey=n=>String(n||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+function ptsMine(pp){
+if(me&&me.bc_number!=null){const mine=pp.find(x=>x.bc_number===me.bc_number);
+ if(!mine)return`<div class="card"><div class="lbl">SUA PONTUAÇÃO</div><div class="so">Ainda não encontramos pontos ligados à sua conta. Os pontos aparecem quando sua ficha (BC) está vinculada ao seu Discord e você joga uma partida confirmada.</div></div>`;
+ const lg=arr(mine.log);return`<div class="card lnme"><div class="lbl">SUA PONTUAÇÃO • BC-${String(mine.bc_number).padStart(3,'0')}</div><div class="lnst big"><div><b>${mine.week_points}</b><small>NA SEMANA</small></div><div><b>${mine.month_points}</b><small>NO MÊS</small></div><div><b>${mine.points}</b><small>TOTAL</small></div><div><b>#${mine.week_rank}</b><small>RANKING DA SEMANA</small></div></div><div class="so">${mine.games} partidas no total • ${mine.week_games} nesta semana • posição geral #${mine.rank}</div><details class="lnx"><summary>COMO VOCÊ GANHOU / PERDEU PONTOS</summary>${lg.length?`<div class="lnlog">${lg.map(z=>`<div><span class="${z.p>0?'up':z.p<0?'dn':''}">${z.p===0?'0':lnSg(z.p)}</span><div><b>${esc(LOGK[z.k]||z.k)}</b><small>${esc(z.d||'')}</small></div><time>${lnDt(z.t)}</time></div>`).join('')}</div>`:'<div class="so">Nenhum lançamento ainda.</div>'}</details></div>`}
+return me?`<div class="card"><div class="lbl">SUA PONTUAÇÃO</div><div class="so">Seu perfil ainda não está ligado a um BC.</div></div>`:`<div class="card"><div class="lbl">SUA PONTUAÇÃO</div><div class="so" style="margin-bottom:10px">Entre com o Discord para ver os seus pontos e o extrato.</div><button class="btn pri" onclick="login()">ENTRAR COM DISCORD</button></div>`}
+P.rank=async()=>{await loadRpl();const[r,pr]=await Promise.all([api('/rest/v1/ranking_entries?select=*&order=position.asc'),api('/rest/v1/player_points?select=*')]);
+const l=arr(r.d),pp=pr.ok?arr(pr.d):[],by=new Map(pp.map(x=>[rkKey(x.nick),x])),wk=PTP==='week',hasP=pp.length>0;
+const c=(x,i)=>{const p=by.get(rkKey(x.nick));return`<div class="card ${i<5?'g':''}"><div class="pos">#${i+1}</div><div class="pa">${x.photo_url?`<img src="${esc(x.photo_url)}" alt="" loading="lazy">`:esc((x.nick||'—').slice(0,2).toUpperCase())}</div><b>${esc(x.nick||'—')}</b><div class="so" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(x.funcao||'—')}</div>${p?`<div class="rkpts"><b>${p.week_points}</b><small>pts na semana</small></div><div class="so" style="font-size:12px">${p.points} no total</div>`:''}</div>`};
+const sorted=pp.slice().sort((a,b)=>b.points-a.points||a.bc_number-b.bc_number);
+const tot=sorted.map((x,i)=>`<div class="lnpr${me&&x.bc_number===me.bc_number?' me':''}"><span class="lnpos">#${i+1}</span>${lnAv(x.bc_number,x.nick,34)}<span class="lnnm"><b>${esc(x.nick)}</b><small>BC-${String(x.bc_number).padStart(3,'0')} • ${x.games} partidas • ${x.week_points} na semana</small></span><span class="lnpts">${x.points}</span></div>`).join('');
+const week=l.length?`<h2>COFRE</h2><div class="rk5">${l.slice(0,5).map(c).join('')}</div><h2 style="margin-top:26px">Demais posições</h2><div class="rk5">${l.slice(5).map((x,i)=>c(x,i+5)).join('')}</div>`:'<div class="so">O ranking ainda não foi publicado.</div>';
+return hero('RANKING','Ranking Azul e pontos dos jogadores, tudo num lugar só. Top 5 da semana = COFRE.')+ptsMine(pp)+(hasP?lnTabs('ptp',PTP,[['week','SEMANA (RANKING AZUL)'],['total','GERAL']]):'')+(wk||!hasP?week:`<div class="card" style="padding:6px 10px">${tot}</div>`)};
+P.pontos=P.rank;   // links antigos (#pontos) caem na aba Ranking
+
+/* ---- TEMAS SAZONAIS: ligados pelo app (Configurações > Tema do site). Padrão = tema azul, nunca alterado.
+   Teste sem ativar para todo mundo: abra o site com ?tema=natal (ou sexta13, anonovo). ?tema=padrao sai da prévia. ---- */
+(()=>{const OK=['sexta13','natal','anonovo'],LBL={sexta13:'SEXTA-FEIRA 13',natal:'FELIZ NATAL',anonovo:'FELIZ ANO NOVO'},H=document.documentElement;
+const un=()=>{document.getElementById('szn')?.remove();document.getElementById('sznx')?.remove();delete H.dataset.season};
+const mount=(t,prev)=>{un();if(!OK.includes(t))return;H.dataset.season=t;const d=document.createElement('div');d.id='szn';d.className='szn '+t;d.setAttribute('aria-hidden','true');
+ if(t==='anonovo'){const C=['#FFD76A','#FFFFFF','#FF9F43','#7DF9FF','#FF6B9A'];d.innerHTML=C.map((c,i)=>`<i class="fw" style="left:${10+i*18+Math.random()*6}%;top:${10+Math.random()*28}%;animation-delay:${(i*1.1).toFixed(1)}s;--c:${c}"></i>`).join('')+'<b class="cf c1"></b><b class="cf c2"></b>'}
+ else if(t==='natal')d.innerHTML='<b class="sn s1"></b><b class="sn s2"></b><b class="sn s3"></b><b class="lights"></b>';
+ else d.innerHTML='<b class="fog"></b><b class="vig"></b><b class="scr"></b>';
+ d.innerHTML+=`<div class="sznp">${LBL[t]}</div>`;document.body.appendChild(d);
+ if(prev){const b=document.createElement('button');b.id='sznx';b.textContent='PRÉVIA DO TEMA • SAIR';b.onclick=()=>{sessionStorage.removeItem('bc_tema_prev');location.href=location.pathname+location.hash};document.body.appendChild(b)}};
+const q=new URLSearchParams(location.search).get('tema');if(q){q==='padrao'?sessionStorage.removeItem('bc_tema_prev'):sessionStorage.setItem('bc_tema_prev',q)}
+const pv=sessionStorage.getItem('bc_tema_prev');
+if(pv&&OK.includes(pv)){const go=()=>mount(pv,true);document.body?go():addEventListener('DOMContentLoaded',go);return}
+const cached=localStorage.getItem('bc_season')||'';const go0=()=>mount(cached);document.body?go0():addEventListener('DOMContentLoaded',go0);
+const pull=async()=>{try{const r=await fetch(U+'/rest/v1/app_settings?key=eq.site_theme&select=value',{headers:{apikey:K}});if(!r.ok)return;const j=await r.json(),t=(j[0]?.value?.theme)||'';const v=OK.includes(t)?t:'';localStorage.setItem('bc_season',v);if((H.dataset.season||'')!==v)mount(v)}catch{}};
+pull();document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});setInterval(pull,300000)})();
 </script></body></html>
