@@ -204,6 +204,16 @@ html[data-season] .lnpr.me{background:var(--g2)}
 .scr{inset:0;background:repeating-linear-gradient(115deg,transparent 0 150px,#FF1A3012 150px 151px,transparent 151px 390px)}
 .scr:after{content:"13";position:absolute;right:2%;bottom:-4%;font:900 clamp(160px,28vw,360px)/1 Rajdhani,sans-serif;color:#FF1A3010}
 @media(prefers-reduced-motion:reduce){.szn *{animation:none!important}}
+
+/* ranking: informações extras nos cards de sempre */
+.rkinfo{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:6px}.rkinfo span{font-size:11px;padding:2px 8px;border-radius:999px;background:#ffffff0f;color:var(--so)}.rkinfo span:first-child{color:var(--cy)}
+.card.mine{box-shadow:0 0 0 2px var(--cy),0 0 24px var(--g1,#3DD0FF33)}
+/* eventos */
+.evl{display:grid;gap:16px}.evx{padding:0;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr)}@media(min-width:820px){.evx:has(.evxi){grid-template-columns:340px 1fr}}
+.evxi{background:var(--p2);min-height:180px}.evxi img{width:100%;height:100%;object-fit:cover;display:block}.evxb{padding:20px 22px}.evxb h2{margin:8px 0 10px;font-size:28px}
+.evtag{font:700 11px Consolas,monospace;letter-spacing:2px;padding:4px 10px;border-radius:999px;border:1px solid var(--so);color:var(--so)}.evtag.on{border-color:var(--ok);color:var(--ok);background:#22C55E1c}
+.evprize{display:inline-block;margin:4px 0 10px;padding:10px 16px;border-radius:14px;border:1px solid #FFB80077;background:linear-gradient(135deg,#FFB80026,#FFB80008)}.evprize small{display:block;font:11px Consolas,monospace;letter-spacing:2px;color:var(--gold)}.evprize b{font-size:22px;color:#FFE08A}
+.evdesc{white-space:pre-wrap;line-height:1.5;color:var(--tx)}.evx.off{opacity:.7}
 </style></head><body>
 <div id="app"><nav id="nav"></nav><div id="mw"><div id="tb"></div><main id="v"></main></div></div>
 <div id="mod"><div id="modc"></div></div><div id="menu"></div><div id="toast"></div><div id="upd"><span>Nova versão disponível</span><button class="btn pri" id="updb">Atualizar</button></div>
@@ -947,7 +957,8 @@ window.nkCp=async(only)=>{const t=only?window.NK_SP:window.nkOut();if(!t){toast(
 /* ======== RANKING (com pontos) + LINES + TEMAS SAZONAIS  (dados do app via Supabase: ranking_entries, player_points, lines_public, app_settings) ======== */
 let LNP='total',PTP='total';
 const sv_=d=>`<svg class="ni" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
-NAV.splice(3,0,['lines',sv_('<path d="M5 20V10M12 20V4M19 20v-7"/>'),'Lines']);   // Ranking e Pontos viraram uma aba só: "Ranking"
+NAV.push(['lines',sv_('<path d="M5 20V10M12 20V4M19 20v-7"/>'),'Lines']);
+{const ORD=['home','matches','fichas','lines','rank'];NAV.sort((a,b)=>{const i=ORD.indexOf(a[0]),j=ORD.indexOf(b[0]);return(i<0?99:i)-(j<0?99:j)})}   // ordem: Início, Confrontos, Fichas, Lines, Ranking
 const lnDt=t=>{const d=new Date(t);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})};
 const lnAv=(bc,nick,sz=34)=>{const p=(typeof RPL!=='undefined'?RPL:[]).find(x=>x.bc_number==bc);return`<span class="lav" style="width:${sz}px;height:${sz}px;font-size:${Math.round(sz/2.6)}px">${p&&p.photo_url?`<img src="${esc(p.photo_url)}" alt="" loading="lazy">`:esc((nick||'—').slice(0,2).toUpperCase())}</span>`};
 const lnSg=n=>(n>0?'+':'')+n;
@@ -958,15 +969,15 @@ const CROWN='<svg viewBox="0 0 64 44" width="46" height="32"><path d="M4 38 L10 
 
 /* ---- LINES (refeito): Geral primeiro, depois Semana ---- */
 P.lines=async()=>{await loadRpl();const r=await api('/rest/v1/lines_public?select=*&order=rank.asc');if(!r.ok)throw new Error('Tabela lines_public indisponível. Rode o SQL 19_pontos_e_lines.sql no Supabase.');
-const wk=LNP==='week',pts=x=>wk?x.week_points:x.total_points,gm=x=>wk?x.week_games:x.games,wn=x=>wk?x.week_wins:x.wins,L=arr(r.d).slice().sort((a,b)=>pts(b)-pts(a)||b.total_points-a.total_points);
-const head=hero('RANKING DE LINES','Cada partida confirmada soma pontos para a line. Sobe quem joga mais e joga melhor.')+lnTabs('lnp',LNP,[['total','GERAL'],['week','SEMANA']]);
+const wk=false,pts=x=>wk?x.week_points:x.total_points,gm=x=>wk?x.week_games:x.games,wn=x=>wk?x.week_wins:x.wins,L=arr(r.d).slice().sort((a,b)=>pts(b)-pts(a)||b.total_points-a.total_points);
+const head=hero('RANKING DE LINES','Cada partida confirmada soma pontos para a line. Sobe quem joga mais e joga melhor.')+'';
 if(!L.length)return head+'<div class="so" style="padding:30px;text-align:center">Nenhuma line publicada ainda.</div>';
 const mx=Math.max(1,...L.map(pts)),wr=x=>gm(x)?Math.round(100*wn(x)/gm(x)):0,tot=L.reduce((a,x)=>a+pts(x),0),gt=L.reduce((a,x)=>a+gm(x),0);
 const stats=`<div class="lnst"><div><b>${L.length}</b><small>LINES</small></div><div><b>${gt}</b><small>PARTIDAS</small></div><div><b>${tot}</b><small>PONTOS ${wk?'NA SEMANA':'NO TOTAL'}</small></div></div>`;
 const pod=L.slice(0,3).map((x,i)=>{const st=x.streak;return`<div class="lnp p${i+1}">${i===0?`<div class="lncrown">${CROWN}</div>`:''}<div class="lnbadge">${i+1}º</div><b class="lnn">${esc(x.name)}</b><div class="lncat">${esc(x.category||'')}</div><div class="lnpt">${pts(x)}<small>PTS</small></div><div class="lnring" style="--v:${wr(x)}"><b>${wr(x)}%</b></div><div class="lnrl">VITÓRIAS</div><div class="lnchips"><span>${gm(x)} partidas</span><span>${wn(x)} vit.</span>${st>=2?`<span class="hot">${st} seguidas</span>`:''}</div><div class="lnmb">${arr(x.members).slice(0,5).map(m=>lnAv(m.bc,m.nick,i===0?36:30)).join('')}</div></div>`});
 const pd=L.length>=3?`<div class="lnpod">${[pod[1],pod[0],pod[2]].join('')}</div>`:`<div class="lnpod one">${pod.join('')}</div>`;
 const row=(x,i)=>{const w=Math.max(2,Math.round(100*Math.max(0,pts(x))/mx)),h=arr(x.history),hm=Math.max(1,...h.map(z=>Math.abs(z.pts))),st=x.streak;
-return`<details class="card lnr${i<3?' top'+(i+1):''}"><summary><span class="lnpos">#${i+1}</span><span class="lnnm"><b>${esc(x.name)}</b><small>${esc(x.category||'')} • ${gm(x)} partidas • ${wr(x)}% vit.${st>=2?` • <i class="up">${st} vitórias seguidas</i>`:st<=-2?` • <i class="dn">${-st} derrotas seguidas</i>`:''}</small><span class="lnbar"><i style="width:${w}%"></i></span></span><span class="lnpts">${pts(x)}</span></summary>
+return`<details class="card lnr${i<3?' top'+(i+1):''}"><summary><span class="lnpos">#${i+1}</span><span class="lnnm"><b>${esc(x.name)}</b><small>${esc(x.category||'')} • ${gm(x)} partidas • ${wr(x)}% vit. • ${x.week_points} na semana${st>=2?` • <i class="up">${st} vitórias seguidas</i>`:st<=-2?` • <i class="dn">${-st} derrotas seguidas</i>`:''}</small><span class="lnbar"><i style="width:${w}%"></i></span></span><span class="lnpts">${pts(x)}</span></summary>
 <div class="lnbd"><div class="lbl">JOGADORES DA LINE</div><div class="lnmem">${arr(x.members).map(m=>`<div class="lnm">${lnAv(m.bc,m.nick,38)}<div><b>${esc(m.nick)}</b><small>BC-${String(m.bc).padStart(3,'0')} • ${m.pts} pts (${m.wk} na semana)</small></div></div>`).join('')||'<span class="so">Sem jogadores.</span>'}</div>
 <div class="lbl" style="margin-top:14px">PROGRESSO (ÚLTIMAS SEMANAS)</div>${h.length?`<div class="lnhist">${h.map(z=>`<div title="${esc(z.w)}: ${z.pts} pts, ${z.games} partidas"><i class="${z.pts<0?'neg':''}" style="height:${Math.max(4,Math.round(64*Math.abs(z.pts)/hm))}px"></i><b>${z.pts}</b><small>${esc(String(z.w).slice(-3))}</small></div>`).join('')}</div>`:'<div class="so">Ainda sem histórico.</div>'}
 <div class="lbl" style="margin-top:14px">ÚLTIMAS PARTIDAS</div><div class="lnrec">${arr(x.recent).map(z=>`<span class="${z.won?'w':'l'}" title="${lnDt(z.t)} • ${esc(KIND[z.kind]||z.kind)}${z.event?' • '+esc(z.event):''}">${z.won?'V':'D'} <small>${lnSg(z.pts)}</small></span>`).join('')||'<span class="so">Nenhuma partida.</span>'}</div>
@@ -981,12 +992,10 @@ if(me&&me.bc_number!=null){const mine=pp.find(x=>x.bc_number===me.bc_number);
  const lg=arr(mine.log);return`<div class="card lnme"><div class="lbl">SUA PONTUAÇÃO • BC-${String(mine.bc_number).padStart(3,'0')}</div><div class="lnst big"><div><b>${mine.week_points}</b><small>NA SEMANA</small></div><div><b>${mine.month_points}</b><small>NO MÊS</small></div><div><b>${mine.points}</b><small>TOTAL</small></div><div><b>#${mine.week_rank}</b><small>RANKING DA SEMANA</small></div></div><div class="so">${mine.games} partidas no total • ${mine.week_games} nesta semana • posição geral #${mine.rank}</div><details class="lnx"><summary>COMO VOCÊ GANHOU / PERDEU PONTOS</summary>${lg.length?`<div class="lnlog">${lg.map(z=>`<div><span class="${z.p>0?'up':z.p<0?'dn':''}">${z.p===0?'0':lnSg(z.p)}</span><div><b>${esc(LOGK[z.k]||z.k)}</b><small>${esc(z.d||'')}</small></div><time>${lnDt(z.t)}</time></div>`).join('')}</div>`:'<div class="so">Nenhum lançamento ainda.</div>'}</details></div>`}
 return me?`<div class="card"><div class="lbl">SUA PONTUAÇÃO</div><div class="so">Seu perfil ainda não está ligado a um BC.</div></div>`:`<div class="card"><div class="lbl">SUA PONTUAÇÃO</div><div class="so" style="margin-bottom:10px">Entre com o Discord para ver os seus pontos e o extrato.</div><button class="btn pri" onclick="login()">ENTRAR COM DISCORD</button></div>`}
 P.rank=async()=>{await loadRpl();const[r,pr]=await Promise.all([api('/rest/v1/ranking_entries?select=*&order=position.asc'),api('/rest/v1/player_points?select=*')]);
-const l=arr(r.d),pp=pr.ok?arr(pr.d):[],by=new Map(pp.map(x=>[rkKey(x.nick),x])),wk=PTP==='week',hasP=pp.length>0;
-const c=(x,i)=>{const p=by.get(rkKey(x.nick));return`<div class="card ${i<5?'g':''}"><div class="pos">#${i+1}</div><div class="pa">${x.photo_url?`<img src="${esc(x.photo_url)}" alt="" loading="lazy">`:esc((x.nick||'—').slice(0,2).toUpperCase())}</div><b>${esc(x.nick||'—')}</b><div class="so" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(x.funcao||'—')}</div>${p?`<div class="rkpts"><b>${p.week_points}</b><small>pts na semana</small></div><div class="so" style="font-size:12px">${p.points} no total</div>`:''}</div>`};
-const sorted=pp.slice().sort((a,b)=>b.points-a.points||a.bc_number-b.bc_number);
-const tot=sorted.map((x,i)=>`<div class="lnpr${me&&x.bc_number===me.bc_number?' me':''}"><span class="lnpos">#${i+1}</span>${lnAv(x.bc_number,x.nick,34)}<span class="lnnm"><b>${esc(x.nick)}</b><small>BC-${String(x.bc_number).padStart(3,'0')} • ${x.games} partidas • ${x.week_points} na semana</small></span><span class="lnpts">${x.points}</span></div>`).join('');
-const week=l.length?`<h2>COFRE</h2><div class="rk5">${l.slice(0,5).map(c).join('')}</div><h2 style="margin-top:26px">Demais posições</h2><div class="rk5">${l.slice(5).map((x,i)=>c(x,i+5)).join('')}</div>`:'<div class="so">O ranking ainda não foi publicado.</div>';
-return hero('RANKING','Ranking Azul e pontos dos jogadores, tudo num lugar só. Top 5 da semana = COFRE.')+ptsMine(pp)+(hasP?lnTabs('ptp',PTP,[['total','GERAL'],['week','SEMANA (RANKING AZUL)']]):'')+(wk||!hasP?week:`<div class="card" style="padding:6px 10px">${tot}</div>`)};
+const pp=pr.ok?arr(pr.d):[],by=new Map(pp.map(x=>[rkKey(x.nick),x]));let l=arr(r.d);
+if(!l.length&&pp.length)l=pp.slice().sort((a,b)=>(a.week_rank||999)-(b.week_rank||999)).map(x=>({nick:x.nick,funcao:'BLUE CASH',photo_url:((typeof RPL!=='undefined'?RPL:[]).find(z=>z.bc_number==x.bc_number)||{}).photo_url||''}));
+const c=(x,i)=>{const p=by.get(rkKey(x.nick));return`<div class="card ${i<5?'g':''}${me&&p&&p.bc_number===me.bc_number?' mine':''}"><div class="pos">#${i+1}</div><div class="pa">${x.photo_url?`<img src="${esc(x.photo_url)}" alt="" loading="lazy">`:esc((x.nick||'—').slice(0,2).toUpperCase())}</div><b>${esc(x.nick||'—')}</b><div class="so" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(x.funcao||'—')}</div>${p?`<div class="rkpts"><b>${p.week_points}</b><small>pts na semana</small></div><div class="rkinfo"><span>BC-${String(p.bc_number).padStart(3,'0')}</span><span>${p.points} no total</span><span>${p.games} partidas</span></div>`:''}</div>`};
+return hero('RANKING','Ranking Azul e pontos dos jogadores, tudo num lugar só. Top 5 da semana = COFRE.')+ptsMine(pp)+(l.length?`<h2>COFRE</h2><div class="rk5">${l.slice(0,5).map(c).join('')}</div><h2 style="margin-top:26px">Demais posições</h2><div class="rk5">${l.slice(5).map((x,i)=>c(x,i+5)).join('')}</div>`:'<div class="so">O ranking ainda não foi publicado.</div>')};
 P.pontos=P.rank;   // links antigos (#pontos) caem na aba Ranking
 
 /* ---- TEMAS SAZONAIS: ligados pelo app (Configurações > Tema do site). Padrão = tema azul, nunca alterado.
@@ -1005,4 +1014,17 @@ if(pv&&OK.includes(pv)){const go=()=>mount(pv,true);document.body?go():addEventL
 const cached=localStorage.getItem('bc_season')||'';const go0=()=>mount(cached);document.body?go0():addEventListener('DOMContentLoaded',go0);
 const pull=async()=>{try{const r=await fetch(U+'/rest/v1/app_settings?key=eq.site_theme&select=value',{headers:{apikey:K}});if(!r.ok)return;const j=await r.json(),t=(j[0]?.value?.theme)||'';const v=OK.includes(t)?t:'';localStorage.setItem('bc_season',v);if((H.dataset.season||'')!==v)mount(v)}catch{}};
 pull();document.addEventListener('visibilitychange',()=>{if(!document.hidden)pull()});setInterval(pull,300000)})();
+
+/* ---- EVENTOS COM PRÊMIO (publicados pelo app: tabela site_events) ---- */
+const EVS_OLD=P.events;
+P.events=async()=>{const r=await api('/rest/v1/site_events?select=*&order=sort.asc'),L=r.ok?arr(r.d):[];if(!L.length)return EVS_OLD();
+L.sort((a,b)=>(a.status==='aberto'?0:1)-(b.status==='aberto'?0:1)||(a.sort||0)-(b.sort||0));
+const ok=u=>/^https?:\/\//i.test(u||''),card=x=>{const open=x.status==='aberto',end=x.ends_at?new Date(x.ends_at).getTime():0,over=end&&end<Date.now();
+return`<div class="card evx${open&&!over?'':' off'}">${x.photo_url?`<div class="evxi"><img src="${esc(x.photo_url)}" alt="" loading="lazy"></div>`:''}<div class="evxb"><span class="evtag ${open&&!over?'on':''}">${open&&!over?'ABERTO':'ENCERRADO'}</span>${x.handle?`<span class="so"> ${esc(x.handle)}</span>`:''}<h2>${esc(x.title)}</h2>
+${x.prize?`<div class="evprize"><small>PRÊMIO</small><b>${esc(x.prize)}</b></div>`:''}
+${x.description?`<div class="evdesc">${esc(x.description)}</div>`:''}
+<div class="so" style="margin-top:8px">${x.date_text?esc(x.date_text):''}${end&&!over?` • termina ${fmt(end)} (Brasília)`:''}</div>
+${end&&!over&&typeof cdh==='function'?cdh(end):''}
+${ok(x.link)&&open&&!over?`<a class="btn pri" style="display:inline-block;margin-top:12px;text-decoration:none" href="${esc(x.link)}" target="_blank" rel="noopener">PARTICIPAR</a>`:''}</div></div>`};
+return hero('EVENTOS','Eventos valendo prêmio. Leia as regras, participe e comprove.')+`<div class="evl">${L.map(card).join('')}</div>`};
 </script></body></html>
