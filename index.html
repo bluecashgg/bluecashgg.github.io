@@ -945,7 +945,7 @@ window.nkUpd=()=>{const o=window.nkOut(),pv=document.getElementById('nkpv'),ct=d
 window.nkCp=async(only)=>{const t=only?window.NK_SP:window.nkOut();if(!t){toast('Escreva o nick primeiro.');return}try{await navigator.clipboard.writeText(t);toast(only?'Espaço invisível copiado.':'Nick copiado! Cole no jogo.')}catch{toast('Não consegui copiar. Selecione e copie manualmente.')}};
 
 /* ======== RANKING (com pontos) + LINES + TEMAS SAZONAIS  (dados do app via Supabase: ranking_entries, player_points, lines_public, app_settings) ======== */
-let LNP='total',PTP='week';
+let LNP='total',PTP='total';
 const sv_=d=>`<svg class="ni" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
 NAV.splice(3,0,['lines',sv_('<path d="M5 20V10M12 20V4M19 20v-7"/>'),'Lines']);   // Ranking e Pontos viraram uma aba só: "Ranking"
 const lnDt=t=>{const d=new Date(t);return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})};
@@ -986,7 +986,7 @@ const c=(x,i)=>{const p=by.get(rkKey(x.nick));return`<div class="card ${i<5?'g':
 const sorted=pp.slice().sort((a,b)=>b.points-a.points||a.bc_number-b.bc_number);
 const tot=sorted.map((x,i)=>`<div class="lnpr${me&&x.bc_number===me.bc_number?' me':''}"><span class="lnpos">#${i+1}</span>${lnAv(x.bc_number,x.nick,34)}<span class="lnnm"><b>${esc(x.nick)}</b><small>BC-${String(x.bc_number).padStart(3,'0')} • ${x.games} partidas • ${x.week_points} na semana</small></span><span class="lnpts">${x.points}</span></div>`).join('');
 const week=l.length?`<h2>COFRE</h2><div class="rk5">${l.slice(0,5).map(c).join('')}</div><h2 style="margin-top:26px">Demais posições</h2><div class="rk5">${l.slice(5).map((x,i)=>c(x,i+5)).join('')}</div>`:'<div class="so">O ranking ainda não foi publicado.</div>';
-return hero('RANKING','Ranking Azul e pontos dos jogadores, tudo num lugar só. Top 5 da semana = COFRE.')+ptsMine(pp)+(hasP?lnTabs('ptp',PTP,[['week','SEMANA (RANKING AZUL)'],['total','GERAL']]):'')+(wk||!hasP?week:`<div class="card" style="padding:6px 10px">${tot}</div>`)};
+return hero('RANKING','Ranking Azul e pontos dos jogadores, tudo num lugar só. Top 5 da semana = COFRE.')+ptsMine(pp)+(hasP?lnTabs('ptp',PTP,[['total','GERAL'],['week','SEMANA (RANKING AZUL)']]):'')+(wk||!hasP?week:`<div class="card" style="padding:6px 10px">${tot}</div>`)};
 P.pontos=P.rank;   // links antigos (#pontos) caem na aba Ranking
 
 /* ---- TEMAS SAZONAIS: ligados pelo app (Configurações > Tema do site). Padrão = tema azul, nunca alterado.
