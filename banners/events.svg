@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" role="img" aria-label="Pinceladas azuis para Eventos">
+  <g fill="none" stroke-linecap="square" stroke-linejoin="bevel">
+    <path d="M760 82 C854 47 965 55 1120 101" stroke="#173FD8" stroke-width="48" opacity=".36"/>
+    <path d="M777 119 C871 88 993 95 1164 143" stroke="#315EFF" stroke-width="17" opacity=".42"/>
+    <path d="M811 155 C922 132 1036 143 1195 187" stroke="#6F8EFF" stroke-width="5" opacity=".40"/>
+    <path d="M850 191 C952 174 1077 186 1208 222" stroke="#2454FF" stroke-width="29" opacity=".24"/>
+    <path d="M902 224 C1010 213 1104 222 1190 247" stroke="#89A4FF" stroke-width="3" opacity=".32"/>
+    <path d="M844 73 L995 41 M914 92 L1102 56 M984 116 L1170 83" stroke="#B1C3FF" stroke-width="2" opacity=".26"/>
+    <path d="M1136 50 L1184 31 M1148 66 L1199 54 M1160 80 L1204 73" stroke="#315EFF" stroke-width="7" opacity=".38"/>
+  </g>
+  <g fill="#7595FF" opacity=".42">
+    <path d="m724 111 18-8-8 17-16 4Z M1057 52l16-7-8 14-14 4Z M1134 211l20-7-9 16-17 5Z M936 245l13-6-5 13-13 3Z M1184 122l11-5-5 10-9 3Z"/>
+    <circle cx="1098" cy="40" r="3"/><circle cx="1160" cy="165" r="2.5"/>
+  </g>
+</svg>

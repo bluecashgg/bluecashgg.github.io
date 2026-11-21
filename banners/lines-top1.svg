@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" aria-hidden="true">
+  <defs><linearGradient id="a" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#F5B301" stop-opacity=".25"/><stop offset="1" stop-color="#2454FF" stop-opacity=".02"/></linearGradient></defs>
+  <path d="M322 31 C480 11 682 67 808 156 L800 347 C671 243 499 204 338 234Z" fill="url(#a)"/>
+  <g fill="none" stroke-linecap="square" stroke-linejoin="bevel">
+    <path d="M390 85 C501 56 646 99 773 173" stroke="#F5B301" stroke-width="34" opacity=".22"/>
+    <path d="M418 116 C532 91 655 128 788 205" stroke="#FFC83D" stroke-width="12" opacity=".25"/>
+    <path d="M455 149 C559 129 669 159 801 232" stroke="#86A3FF" stroke-width="6" opacity=".25"/>
+    <path d="M508 189 C604 177 694 196 799 259" stroke="#2454FF" stroke-width="22" opacity=".20"/>
+    <path d="M592 244 C663 239 723 257 789 294" stroke="#FFE18A" stroke-width="3" opacity=".32"/>
+    <path d="M461 67 L716 191 M535 57 L760 159 M599 65 L794 124" stroke="#F5B301" stroke-width="2" opacity=".22"/>
+  </g>
+  <g fill="#FFD76A" opacity=".28"><path d="m701 54 5-14 5 14 14 5-14 5-5 14-5-14-14-5Z"/><circle cx="655" cy="42" r="3"/><circle cx="751" cy="89" r="2.5"/></g>
+</svg>
