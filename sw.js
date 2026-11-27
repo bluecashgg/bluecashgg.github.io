@@ -1,6 +1,6 @@
-// Troque VERSION a cada publicação: é isso que faz aparecer o botão "Nova versão disponível — Atualizar".
-const VERSION='1.18.2',C='bc-'+VERSION,F=['./','logo.png','icon-192.png'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)))});
+// Troque VERSION a cada publicação. A atualização é AUTOMÁTICA: a nova versão assume sozinha e vale na próxima vez que o site for aberto.
+const VERSION='1.19.0',C='bc-'+VERSION,F=['./','logo.png','icon-192.png'];
+self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(F)))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('message',e=>{if(e.data==='SKIP')self.skipWaiting()});
 self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET'||u.origin!==location.origin)return;

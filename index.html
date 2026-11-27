@@ -241,7 +241,7 @@ details.tn[data-th]>summary{background:linear-gradient(100deg,color-mix(in srgb,
 .nts{max-width:560px}.nts-k{font:700 11px Consolas,monospace;letter-spacing:3px;color:var(--cy)}.nts h2{margin:4px 0 14px;font-size:30px;background:linear-gradient(90deg,#fff,var(--cy));-webkit-background-clip:text;background-clip:text;color:transparent}.nts-i{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;margin-bottom:8px;border-radius:12px;background:#ffffff0a;border:1px solid #ffffff14}.nts-i>span{font-size:22px}.nts-i b{display:block;font-size:16px}.nts-i small{display:block;color:var(--so);font-size:13px;line-height:1.4}
 </style></head><body>
 <div id="app"><nav id="nav"></nav><div id="mw"><div id="tb"></div><main id="v"></main></div></div>
-<div id="mod"><div id="modc"></div></div><div id="menu"></div><div id="toast"></div><div id="upd"><span>Nova versão disponível</span><button class="btn pri" id="updb">Atualizar</button></div>
+<div id="mod"><div id="modc"></div></div><div id="menu"></div><div id="toast"></div>
 <div id="lock"><div><img src="logo.png" width="90"><h1 id="lt"></h1><p id="lm" class="so"></p><button class="btn pri" id="lb" style="display:none">ATUALIZAR AGORA</button></div></div>
 <script src="qr.js"></script>
 <script>
@@ -405,9 +405,7 @@ $('#lb').onclick=async()=>{try{const rg=await navigator.serviceWorker?.getRegist
 ['mousemove','keydown','touchstart'].forEach(e=>addEventListener(e,()=>idle=Date.now(),{passive:true}));
 addEventListener('pagehide',()=>{if(me&&S)fetch(`${U}/rest/v1/presence?user_id=eq.${me.id}`,{method:'DELETE',keepalive:true,headers:{apikey:K,Authorization:'Bearer '+S.a}})});
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.dip=e});
-if('serviceWorker'in navigator){const had=!!navigator.serviceWorker.controller;let rl=false;const ub=w=>{$('#upd').style.display='flex';$('#updb').onclick=()=>w.postMessage('SKIP')};
-navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!had||rl)return;rl=true;location.reload()});
-navigator.serviceWorker.register('sw.js').then(r=>{if(r.waiting&&had)ub(r.waiting);r.addEventListener('updatefound',()=>{const n=r.installing;n&&n.addEventListener('statechange',()=>{if(n.state==='installed'&&navigator.serviceWorker.controller)ub(n)})});setInterval(()=>r.update(),18e5);document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update()})})}
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(r=>{setInterval(()=>r.update(),18e5);document.addEventListener('visibilitychange',()=>{if(!document.hidden)r.update()})})}
 /* ===================== v1.8 ===================== */
 const css2=document.createElement('style');css2.textContent=`
 @keyframes flow{to{background-position:200% 0}}
@@ -1092,31 +1090,36 @@ let SEASON=null;const SEAP=(async()=>{try{const r=await fetch(U+'/rest/v1/app_se
 const seasonTxt=()=>{if(!SEASON)return'';const d=SEASON.planned_end?Math.ceil((new Date(SEASON.planned_end)-Date.now())/864e5):null;return`TEMPORADA ${SEASON.name}${d!=null?(d>0?' • termina em '+d+' dia(s)':' • encerra em breve'):''}`};
 async function loadInternal(){try{const r=await api('/rest/v1/internal_matches?select=*&order=scheduled_at.asc');return r.ok?arr(r.d).map(x=>({...x,kind:'interno',opponent:x.line_b,fem_us:x.fem_a,fem_them:x.fem_b,score_us:0,score_them:0})):[]}catch{return[]}}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-pft]');if(!t)return;const w=t.closest('.pf');w.querySelectorAll('[data-pft]').forEach(b=>b.classList.toggle('on',b===t));w.querySelectorAll('.pf-pane').forEach(pn=>pn.classList.toggle('on',pn.dataset.pf===t.dataset.pft));if(t.dataset.pft==='ficha'&&w._draw){w._draw();w._draw=null}});
-P.player=async bc=>{await loadRpl();await SEAP;const[a,b,c,d]=await Promise.all([api('/rest/v1/players_public?select=*&bc_number=eq.'+bc),api('/rest/v1/player_points?select=*&bc_number=eq.'+bc),api('/rest/v1/player_extras?select=*&bc_number=eq.'+bc),api('/rest/v1/player_prefs?select=*&bc_number=eq.'+bc)]);
-const from=PFROM&&PFB[PFROM]?PFROM:'rank',back=`<button class="btn" data-go="${from}">← ${PFB[from]}</button>`,p0=arr(a.d)[0];if(!p0)return`<div class="pf-top">${back}</div><div class="card"><b>Jogador não encontrado.</b></div>`;
+P.player=async(bc,opt={})=>{await loadRpl();await SEAP;const[a,b,c,d]=await Promise.all([api('/rest/v1/players_public?select=*&bc_number=eq.'+bc),api('/rest/v1/player_points?select=*&bc_number=eq.'+bc),api('/rest/v1/player_extras?select=*&bc_number=eq.'+bc),api('/rest/v1/player_prefs_pub?select=*&bc_number=eq.'+bc)]);
+const from=PFROM&&PFB[PFROM]?PFROM:'rank',back=opt.own?'':`<button class="btn" data-go="${from}">← ${PFB[from]}</button>`,p0=arr(a.d)[0];if(!p0)return`<div class="pf-top">${back}</div><div class="card"><b>Jogador não encontrado.</b></div>`;
 const pr=d&&d.ok?arr(d.d)[0]:null,p={...p0};if(pr){if(pr.age)p.age=pr.age;if(pr.specialty)p.function=pr.specialty;if(pr.photo_url)p.photo_url=photoUrl(pr.photo_url);p.ficha_escolhida=pr.ficha_escolhida||''}
 const pt=b.ok?arr(b.d)[0]:null,ex=c.ok?arr(c.d)[0]:null,tit=arr(ex&&ex.titles),aw=arr(ex&&ex.awards),own=arr(ex&&ex.specialties).map(x=>String(x).toUpperCase()),cur=String(p.function||'').toUpperCase(),fch=arr(ex&&ex.fichas),mine=me&&me.bc_number!=null&&Number(me.bc_number)===Number(bc);
 const chips=Object.entries(SPEC).map(([k,v])=>{const on=cur===k,has=!v.rare||own.includes(k)||on,st=v.rare&&!has?'lock':on?'on':'';return`<div class="spc ${st}" style="--c:${v.c}"><b>${esc(v.n)}</b><small>${v.rare?(has?'RARA':'RARA • INDISPONÍVEL'):'PADRÃO'}${on?' • ATUAL':''}</small></div>`}).join('');
 const other=cur&&!SPEC[cur]?`<div class="spc on" style="--c:#C77DFF"><b>${esc(p.function)}</b><small>ATUAL</small></div>`:'';
 const sp=SPEC[cur]||{c:'#C77DFF'},tn=t=>`<div class="ttl k-${esc(t.k||'outro')}"><b>${esc(t.n)}</b><small>${esc(t.s||'')}${t.d?' • '+esc(t.d):''}</small></div>`;
 const shopNames={};try{const sr=await api('/rest/v1/shop_items?select=id,name,template');if(sr.ok)arr(sr.d).forEach(i=>{shopNames[i.id]=i.name;SHOPT[i.id]=i.template})}catch{}
-setTimeout(()=>{const w=document.querySelector('.pf');if(w){w._draw=async()=>{try{const cv=await drawFicha(p),h=document.getElementById('plficha');if(h){cv.style.cssText='width:100%;border-radius:14px';h.innerHTML='';h.appendChild(cv)}}catch{}};if(w.querySelector('[data-pft="ficha"].on')){w._draw();w._draw=null}const eb=document.getElementById('pfEdit');if(eb)eb.onclick=()=>editPerfil(p,ex,fch,shopNames)}},60);
+const curK=fichaKey(p),NMK={natal:'Noite Mágica (Natal)',anonovo:'Feliz Ano Novo'},col=[{n:'Ficha padrão BLUE CASH',t:'PADRÃO • todo jogador tem',use:curK==='azul'||curK==='fem'}];
+if(+bc===0)col.push({n:'Ficha exclusiva BC-000',t:'EXCLUSIVA • vale enquanto for o BC-000',use:curK==='top1'});if(+bc===67)col.push({n:'Ficha exclusiva BC-067',t:'EXCLUSIVA • vale enquanto for o BC-067',use:curK==='six'});
+if(FSN)col.push({n:NMK[FSN]||'Ficha sazonal',t:'SAZONAL • por tempo limitado',use:curK===FSN});
+fch.forEach(id=>col.push({n:shopNames[id]||id,t:'DA COLEÇÃO',use:!!SHOPT[id]&&p.ficha_escolhida===id}));
+const colH=col.map(c=>`<div class="ttl k-ficha${c.use?' emuso':''}"><b>${esc(c.n)}</b><small>${esc(c.t)}${c.use?' • EM USO':''}</small></div>`).join('');
+setTimeout(()=>{const w=document.querySelector('.pf');if(w){w._draw=async()=>{try{const cv=await drawFicha(p),h=document.getElementById('plficha');if(h){cv.style.cssText='width:100%;max-width:300px;border-radius:12px;cursor:zoom-in;display:block';h.innerHTML='';h.appendChild(cv);const big=()=>{modal('<div id="fxh" style="text-align:center"></div><div class="row"><button class="btn" onclick="closeM()">FECHAR</button></div>');const b=document.createElement('canvas');b.width=cv.width;b.height=cv.height;b.getContext('2d').drawImage(cv,0,0);b.style.cssText='width:100%;max-width:680px;border-radius:12px';document.getElementById('fxh').appendChild(b)};cv.onclick=big;const bt=document.createElement('button');bt.className='btn';bt.style.marginTop='10px';bt.textContent='EXPANDIR FICHA';bt.onclick=big;h.appendChild(bt)}}catch{}};if(w.querySelector('[data-pft="ficha"].on')){w._draw();w._draw=null}const eb=document.getElementById('pfEdit');if(eb)eb.onclick=()=>editPerfil(p,ex,fch,shopNames)}},60);
 return`<div class="pf"><div class="pf-top">${back}${mine?'<button class="btn pri" id="pfEdit">EDITAR PERFIL</button>':''}</div>
 <div class="card pf-head"><div class="plav">${lnAv(p.bc_number,p.nick,96).replace('lav"','lav pl"')}</div><div class="pf-id"><div class="so" style="letter-spacing:2px;font-size:12px">BC-${String(p.bc_number).padStart(3,'0')} • ${esc(p.status||'')}${seasonTxt()?' • '+esc(seasonTxt()):''}</div><h1>${esc(p.nick)}</h1><div class="pf-ch">${cur?`<span class="plsp" style="--c:${sp.c}">${esc(p.function)}</span>`:''}${p.age?`<span class="pf-age">${esc(p.age)} anos</span>`:''}</div></div>
 <div class="pf-st"><div class="hi"><b>${pt?pt.points:'—'}</b><small>PONTOS</small></div><div><b>${pt?'#'+pt.rank:'—'}</b><small>POSIÇÃO</small></div><div><b>${pt?pt.week_points:'—'}</b><small>SEMANA</small></div><div><b>${pt?pt.games:'—'}</b><small>PARTIDAS</small></div></div></div>
-<div class="pf-tabs"><button data-pft="geral" class="on">VISÃO GERAL</button><button data-pft="titulos">TÍTULOS${tit.length+aw.length?' ('+(tit.length+aw.length)+')':''}</button><button data-pft="colecao">COLEÇÃO${fch.length?' ('+fch.length+')':''}</button><button data-pft="ficha">FICHA</button></div>
+<div class="pf-tabs"><button data-pft="geral" class="on">VISÃO GERAL</button><button data-pft="titulos">TÍTULOS${tit.length+aw.length?' ('+(tit.length+aw.length)+')':''}</button><button data-pft="colecao">COLEÇÃO (${col.length})</button><button data-pft="ficha">FICHA</button>${opt.conta?'<button data-pft="conta">MINHA CONTA</button>':''}</div>
 <div class="pf-pane on" data-pf="geral"><div class="lbl">ESPECIALIDADES</div><div class="spcs">${chips}${other}</div>${tit.length?`<div class="lbl" style="margin-top:18px">ÚLTIMOS TÍTULOS</div><div class="ttls">${tit.slice(-3).reverse().map(tn).join('')}</div>`:''}</div>
 <div class="pf-pane" data-pf="titulos">${tit.length?`<div class="ttls">${tit.map(tn).join('')}</div>`:'<div class="so">Nenhum título ainda. Eles aparecem aqui quando forem conquistados em temporadas e campeonatos.</div>'}${aw.length?`<div class="lbl" style="margin-top:18px">PREMIAÇÕES</div><div class="ttls">${aw.map(t=>`<div class="ttl k-premio"><b>${esc(t.n)}</b><small>${esc(t.v||'')}${t.d?' • '+esc(t.d):''}</small></div>`).join('')}</div>`:''}</div>
-<div class="pf-pane" data-pf="colecao">${fch.length?`<div class="ttls">${fch.map(t=>`<div class="ttl k-ficha"><b>${esc(shopNames[t]||t)}</b></div>`).join('')}</div>`:'<div class="so">Nenhuma ficha na coleção ainda. Veja a <a href="#loja" style="color:var(--cy)">Loja</a>.</div>'}</div>
-<div class="pf-pane" data-pf="ficha"><div id="plficha" style="max-width:560px"><div class="so">Montando a ficha…</div></div></div></div>`};
+<div class="pf-pane" data-pf="colecao"><div class="ttls">${colH}</div><div class="so" style="margin-top:12px">Quer mais? Veja a <a href="#loja" data-go="loja" style="color:var(--cy)">Loja</a>.</div></div>
+<div class="pf-pane" data-pf="ficha"><div id="plficha"><div class="so">Montando a ficha…</div></div></div>${opt.conta?`<div class="pf-pane" data-pf="conta">${opt.conta}</div>`:''}</div>`};
 
 /* ---- edição do PRÓPRIO perfil: idade, foto da ficha, especialidade e ficha escolhida (validado no servidor) ---- */
 async function upPhoto(file){const pay=JSON.parse(atob(S.a.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))),did=(pay.user_metadata||{}).provider_id;if(!did)throw new Error('Não achei seu Discord na sessão. Saia e entre de novo.');
 const bm=await createImageBitmap(file),cv=document.createElement('canvas');cv.width=cv.height=640;const cx=cv.getContext('2d'),sc=Math.max(640/bm.width,640/bm.height);cx.drawImage(bm,(640-bm.width*sc)/2,(640-bm.height*sc)/2,bm.width*sc,bm.height*sc);
 const blob=await new Promise(r=>cv.toBlob(r,'image/jpeg',.88)),path=did+'/foto-'+Date.now()+'.jpg',r=await fetch(U+'/storage/v1/object/ficha-fotos/'+path,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+S.a,'Content-Type':'image/jpeg','x-upsert':'true'},body:blob});if(!r.ok)throw new Error('Não consegui enviar a foto ('+r.status+').');return path}
 function editPerfil(p,ex,fch,names){const own=arr(ex&&ex.specialties).map(x=>String(x).toUpperCase()),opts=['Monstro','Fantasma','Relâmpago',...Object.values(SPEC).filter(v=>v.rare&&own.includes(v.n.toUpperCase())).map(v=>v.n)],n=Number(p.bc_number),exc=n===0||n===67;
-const fo=[['','Manter como está'],['padrao','Padrão (acompanha os temas especiais)'],...(exc?[['propria','Minha ficha exclusiva (BC-'+String(n).padStart(3,'0')+')']]:[]),...fch.map(id=>[id,names[id]||id])];
-modal(`<div class="nts"><div class="nts-k">MEU PERFIL</div><h2>Editar perfil</h2><div class="so" style="margin-bottom:12px">Só você pode mudar estes dados. O servidor confere se a especialidade e a ficha são suas.</div>
+const fo=[['','Manter como está'],...(FSN?[]:[['padrao','Padrão BLUE CASH (azul)']]),...(exc?[['propria','Minha ficha exclusiva (BC-'+String(n).padStart(3,'0')+')']]:[]),...fch.map(id=>[id,names[id]||id])];
+modal(`<div class="nts"><div class="nts-k">MEU PERFIL</div><h2>Editar perfil</h2><div class="so" style="margin-bottom:12px">Só você pode mudar estes dados. O servidor confere se a especialidade e a ficha são suas.${FSN?' <b style="color:var(--cy)">Ficha sazonal ativa:</b> durante o evento só dá para trocar por outra ficha que você tenha.':''}</div>
 <label class="lbl">IDADE</label><input id="ep-age" type="number" min="8" max="80" value="${esc(p.age||'')}" style="width:100%;margin-bottom:10px">
 <label class="lbl">ESPECIALIDADE</label><select id="ep-sp" style="width:100%;margin-bottom:10px">${opts.map(o=>`<option ${String(p.function||'').toUpperCase()===o.toUpperCase()?'selected':''}>${esc(o)}</option>`).join('')}</select>
 <label class="lbl">FICHA</label><select id="ep-fi" style="width:100%;margin-bottom:10px">${fo.map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join('')}</select>
@@ -1128,16 +1131,10 @@ $('#ep-go').onclick=async()=>{$('#ep-go').disabled=true;try{let path=null;if(ph)
 
 
 /* ======== NOTAS DA ATUALIZAÇÃO: aparecem UMA vez para cada visitante (troque NOTES.v para mostrar de novo) ======== */
-const NOTES={v:'2026-11-18',t:'NOVIDADES DA BLUE CASH',items:[
-['🆕','Ficha nova','A ficha azul ganhou um visual novo, e chegaram as fichas sazonais de Natal e Ano Novo.'],
-['👤','Perfil completo','Clique em qualquer jogador no Ranking, nas Lines ou nas Fichas para ver pontos, especialidades e títulos.'],
-['🏆','Ranking com pontos','Os pontos totais agora ficam em destaque, junto com BC e partidas.'],
-['⚔','Confrontos internos','Line x line na aba Lines e na página inicial, com as duas logos da BLUE CASH.'],
-['🎨','Torneios renovados','Visual novo na inicial e cores de tema bem mais fortes.'],
-['🎄','Temas especiais','Sexta-feira 13, Natal e Ano Novo, ativados nas datas certas.'],
-['🛒','Loja de fichas','Fichas exclusivas, edições limitadas numeradas e fichas sazonais, com prévia usando a sua foto.'],['✏️','Seu perfil, do seu jeito','Troque idade, foto da ficha, especialidade e ficha escolhida direto no seu perfil.'],['📅','Temporadas','Cada temporada vale um mês. Os melhores ganham títulos no perfil.'],['🔜','Em breve','Especialidades raras: EASY GAME e IMPERADOR.']]};
-function notesM(){modal(`<div class="nts"><div class="nts-k">ATUALIZAÇÃO</div><h2>${NOTES.t}</h2><div class="nts-l">${NOTES.items.map(i=>`<div class="nts-i"><span>${i[0]}</span><div><b>${i[1]}</b><small>${i[2]}</small></div></div>`).join('')}</div><div class="row"><button class="btn pri" onclick="closeM()">BORA TESTAR</button></div></div>`)}
-setTimeout(()=>{try{if(localStorage.getItem('bc_notes')!==NOTES.v){localStorage.setItem('bc_notes',NOTES.v);notesM()}}catch{}},1600);
+let NOTES=null;
+const NOTESP=(async()=>{try{const r=await fetch(U+'/rest/v1/app_settings?key=eq.notes&select=value',{headers:{apikey:K}});if(!r.ok)return;const j=await r.json(),v=j[0]&&j[0].value;if(v&&v.v&&arr(v.items).length)NOTES={v:v.v,t:v.t||'NOVIDADES',items:v.items}}catch{}})();
+function notesM(){modal(`<div class="nts"><div class="nts-k">ATUALIZAÇÃO</div><h2>${esc(NOTES.t)}</h2><div class="nts-l">${NOTES.items.map(i=>`<div class="nts-i"><span>${esc(i[0])}</span><div><b>${esc(i[1])}</b><small>${esc(i[2])}</small></div></div>`).join('')}</div><div class="row"><button class="btn pri" onclick="closeM()">BORA TESTAR</button></div></div>`)}
+setTimeout(async()=>{try{await NOTESP;if(NOTES&&localStorage.getItem('bc_notes')!==NOTES.v){localStorage.setItem('bc_notes',NOTES.v);notesM()}}catch{}},1600);
 
 /* ======== LOJA DE FICHAS (itens vêm do app: tabela shop_items) ======== */
 const TIERS={limitada:{n:'VERSÃO LIMITADA',c:'#FF4D8D',o:5},lendaria:{n:'LENDÁRIA',c:'#FFC21A',o:4},epica:{n:'ÉPICA',c:'#B05CFF',o:3},rara:{n:'RARA',c:'#4DA3FF',o:2},comum:{n:'COMUM',c:'#9FB0CF',o:1}};
@@ -1153,6 +1150,10 @@ setTimeout(()=>L.forEach(async it=>{const h=document.getElementById('pv-'+it.id)
 return hero('LOJA','Fichas exclusivas, edições limitadas e fichas sazonais para colecionar.')+aviso+(L.length?grp('Versão limitada',lim)+grp('Disponíveis',disp)+grp('Sazonais e de evento',saz)+grp('Em breve',breve)+grp('Esgotadas',esg):'<div class="so" style="padding:30px;text-align:center">A loja abre em breve.</div>')+`<div class="so" style="margin-top:18px">As imagens são pré-visualizações com a sua foto e o seu nome, protegidas por marca d'água. © BLUE CASH • Todos os direitos reservados.</div>`};
 document.addEventListener('contextmenu',e=>{if(e.target.closest('.shp-pv'))e.preventDefault()});
 
+
+/* menu Perfil = perfil novo (com a aba MINHA CONTA trazendo os cartões antigos: status, FF ID, nick invisível...) */
+const ME_OLD=P.me;
+P.me=async()=>{if(!me||me.bc_number==null)return ME_OLD();const conta=await ME_OLD();return P.player(me.bc_number,{own:true,conta})};
 </script>
 <style id="blue-cash-visual-refresh">
 /* Banners editoriais BLUE CASH: pinceladas vetoriais por categoria, sem imagem repetida */
@@ -1275,5 +1276,7 @@ details.tn[data-th] .rj .btn{border-color:var(--cy);color:var(--cy)}
 .shp-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}.shp-i{position:relative;padding:12px!important;border-color:color-mix(in srgb,var(--c) 45%,#202B3D)!important}.shp-i:hover{box-shadow:0 0 30px color-mix(in srgb,var(--c) 30%,transparent)!important}.shp-i.off{filter:grayscale(.7);opacity:.7}.shp-pv{aspect-ratio:1;border-radius:10px;overflow:hidden;background:#05070C;display:grid;place-items:center;margin-bottom:10px;box-shadow:0 0 26px color-mix(in srgb,var(--c) 28%,transparent)}.shp-t{position:absolute;top:18px;left:18px;font:800 10px Consolas,monospace;letter-spacing:1.5px;padding:4px 9px;border-radius:999px;color:#fff;background:var(--c);box-shadow:0 0 14px var(--c)}.shp-own{position:absolute;top:18px;right:18px;font:800 10px Consolas,monospace;letter-spacing:1.5px;padding:4px 9px;border-radius:999px;background:#22C55E;color:#04180D}.shp-n{display:block;font:800 20px Rajdhani,sans-serif;margin-bottom:2px}.shp-f{display:flex;justify-content:space-between;align-items:center;margin:8px 0 6px}.shp-s{font:700 11px Consolas,monospace;letter-spacing:1.5px;color:var(--so)}.shp-s.s-disponivel{color:#35C98A}.shp-s.s-esgotada{color:#FF526F}.shp-s.s-evento{color:#C77DFF}.shp-s.s-em_breve{color:#FFB44A}.shp-p{font:800 20px Rajdhani,sans-serif;color:#F5CB6A}.shp-bar{height:6px;border-radius:6px;background:#05070C;overflow:hidden;margin-bottom:4px}.shp-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c),#fff)}.shp-note{margin:14px 0}
 .hero[data-page="loja"]{background-image:linear-gradient(90deg,#080C15 0%,rgba(8,12,21,.97) 36%,rgba(8,12,21,.78) 56%,rgba(8,12,21,.16) 100%),url("banners/fichas.svg")!important}
 
+
+.ttl.k-ficha.emuso{border-color:#22C55E;box-shadow:0 0 18px #22C55E33}.ttl.k-ficha.emuso small{color:#7CE8AE}
 </style>
 </body></html>
